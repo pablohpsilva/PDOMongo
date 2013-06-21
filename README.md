@@ -7,12 +7,12 @@ PDO (PHP Data Object) for MongoDB.
 How it works
 ========
 
-PDOMongo is simple and stright forward as you can see below:
+PDOMongo is simple and straightforward as you can see below:
 
 	<?php
 		use PDOMongo;
 		/*
-		 * If you aren't using namespaces, use:
+		 * If you aren't using namespaces:
 		 * require_once(__DIR__.'\PDOMongo.php');
 		 */
 
@@ -24,8 +24,7 @@ PDOMongo is simple and stright forward as you can see below:
 		$pdomongo->setCollection('things');
 	?>
 
-Another example is showed below. For understand how to use another options, please, open the PDOMongo.php file and read the construction function.
-
+Another example is shown below. For understand how to use another options, please, open the PDOMongo.php file and read the construction function.
 	<?php
 		use PDOMongo;
 		/*
@@ -61,7 +60,7 @@ Manipulation Database Objects
 ========
 
 	<?php
-		// PDOMongo created with defaults values;
+		// PDOMongo created with custom values;
 		$pdo = PDOMongo("https://myMongoDB.myHost.com","myDatabase","Admin","Password");
 		$pdo->setCollection("myCollection");
 		
