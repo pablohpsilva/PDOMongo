@@ -3,18 +3,37 @@ PDOMongo
 
 PDO (PHP Data Object) for MongoDB.
 
-How to use
----------
+How it works
+========
 
-There are some ways to use PDOMongo. Two simple examples are these:
+PDOMongo is simple and stright forward as you can see below:
 
-* Simplest
-	$t = new PDOMongo();
-	$t->setDatabase('test');
-	$t->setCollection('things');
+	<?php
+		use PDOMongo;
+		/*
+		 * If you aren't using namespaces, use:
+		 * require_once(__DIR__.'\PDOMongo.php');
+		 */
 
-* Regular
-	$host = 'localhost';
-	$database = 'test';
-	$t = new PDOMongo($host,$database);
-	$t->setCollection('things');
+		// Create a PDOMongo with default values
+		$pdomongo = new PDOMongo(); 
+		// Set the database
+		$pdomongo->setDatabase('test');
+		// Set the collection
+		$pdomongo->setCollection('things');
+	?>
+
+	<?php
+		use PDOMongo;
+		/*
+		 * If you aren't using namespaces, use:
+		 * require_once(__DIR__.'\PDOMongo.php');
+		 */
+
+		$host = 'www.myDatabase.myHost.com';
+		$database = 'mongoDatabase';
+		// Create PDOMongo with custom values;
+		$pdomongo = new PDOMongo($host,$database);
+		// Set Collection
+		$pdomongo->setCollection('things');
+	?>
