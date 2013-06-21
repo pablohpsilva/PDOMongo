@@ -2,6 +2,7 @@ PDOMongo
 ========
 
 PDO (PHP Data Object) for MongoDB.
+* Help me improve this small piece of software! Every help will be great and welcome.
 
 How it works
 ========
