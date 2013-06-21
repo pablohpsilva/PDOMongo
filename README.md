@@ -23,6 +23,8 @@ PDOMongo is simple and stright forward as you can see below:
 		$pdomongo->setCollection('things');
 	?>
 
+Another example is showed below. For understand how to use another options, please, open the PDOMongo.php file and read the construction function.
+
 	<?php
 		use PDOMongo;
 		/*
