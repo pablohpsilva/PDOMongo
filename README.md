@@ -25,6 +25,7 @@ PDOMongo is simple and straightforward as you can see below:
 	?>
 
 Another example is shown below. For understand how to use another options, please, open the PDOMongo.php file and read the construction function.
+
 	<?php
 		use PDOMongo;
 		/*
