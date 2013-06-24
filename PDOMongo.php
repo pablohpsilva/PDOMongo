@@ -6,14 +6,14 @@
  */
 
 class PDOMongo{
-	public $database;
-	public $connection;
-	public $collection;
-	
-	public function __construct($host = 'localhost:27017', $database = null, $dbauth = 'admin', $username = null, $password = null){
+	private $database;
+	private $connection;
+	private $collection;
+
+	public function __construct($host = 'localhost:27017', $database = null, $username = null, $password = null, $dbauth = 'admin'){
 		try{
 			$serverString = "mongodb://";
-			if(is_null($username) )
+			if(is_null($username))
 				$serverString .= $host . "/" . $dbauth;
 			else
 				$serverString .= $username . ":" . $password . "@" . $host . "/" . $dbauth;
@@ -21,59 +21,59 @@ class PDOMongo{
 			$this->connection = new MongoClient($serverString);
 			self::setDatabase($database);
 		}
-		catch(MongoException $e){
+		catch(Exception $e){
 			echo $e;
 		}
 	}
 
-	public function getObjects($input){
-		switch ($input) {
-			case 'connection':
-				return $this->connection;
-			case 'database':
-				return $this->database;
-			case 'collection':
-				return $this->collection;
-			default:
-				return null;
-		}
+	/*
+	 * [PRIVATE] Create an Object (array) using a mongoCursor.
+	 */
+	private function createObjects($mongoCursor){
+		$resultSet = array();
+        while($mongoCursor->hasNext())
+            $resultSet[] = $mongoCursor->getNext();
+        return $resultSet;
+	}
+	
+	/*
+	 * [PRIVATE] Create an array for search purposes;
+	 */
+	private function createArray($index, $value){
+		if($index == 'id')
+			return array('_id' => new MongoID($value));
+		else
+			return array($index => $value);
 	}
 
-	public function setDatabase($input){ $this->database = $this->connection->selectDB($input); }
+	public function setDatabase($input){ if(!is_null($input)) $this->database = $this->connection->selectDB($input); }
 
-	public function setCollection($input){ $this->collection = $this->database->selectCollection($input); }
+	public function setCollection($input){ if(!is_null($input)) $this->collection = $this->database->selectCollection($input); }
+
+	public function getConnection(){ return $this->connection; }
+
+	public function getCollection(){ return $this->collection; }
+
+	public function getDatabase(){ return $this->database; }
 
 	public function insert($f){ $this->collection->insert($f); }
 
 	public function update($f1, $f2){ $this->collection->update($f1, $f2); }
 
 	public function ensureIndex($args){ return $this->collection->ensureIndex($args); }
-
-	public function createArray($index, $value){
-		if($index == 'id')
-			return array('_id' => new MongoID($value));
-		else
-			return array($index => $value);
-	}
  
     public function get($index, $value){
         $mongoCursor = $this->collection->find(self::createArray($index, $value));
-        $resultSet = array();
-        $index = 0;
-        while( $mongoCursor->hasNext()){
-            $resultSet[$index] = $mongoCursor->getNext();
-            $index++;
-        }
-        return $resultSet;
+        return self::createObjects($mongoCursor);
     }
  
     public function getAll(){
         $mongoCursor = $this->collection->find();
-        return $mongoCursor;
+        return self::createObjects($mongoCursor);
     }
  
-    public function delete($f, $one = FALSE){
-        $c = $this->collection->remove($f, $one);
+    public function delete($field, $value, $justOne = FALSE){
+        $c = $this->collection->remove(self::createArray($field, $value), self::createArray('justOne', $justOne));
         return $c;
     }
 }
