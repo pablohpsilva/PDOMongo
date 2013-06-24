@@ -26,9 +26,6 @@ class PDOMongo{
 		}
 	}
 
-	/*
-	* [PRIVATE] Create an Object (array) using a mongoCursor.
-	*/
 	private function createObjects($mongoCursor){
 		$resultSet = array();
 		while($mongoCursor->hasNext())
@@ -36,14 +33,11 @@ class PDOMongo{
 		return $resultSet;
 	}
 
-	/*
-	* [PRIVATE] Create an array for search purposes;
-	*/
-	private function createArray($index, $value){
-		if($index == 'id')
+	private function createArray($attr, $value){
+		if($attr == 'id')
 			return array('_id' => new MongoID($value));
 		else
-			return array($index => $value);
+			return array($attr => $value);
 	}
 
 	public function setDatabase($input){ 
@@ -68,8 +62,8 @@ class PDOMongo{
 
 	public function ensureIndex($args){ return $this->collection->ensureIndex($args); }
 
-	public function get($index, $value){
-		$mongoCursor = $this->collection->find(self::createArray($index, $value));
+	public function get($attr, $value){
+		$mongoCursor = $this->collection->find(self::createArray($attr, $value));
 		return self::createObjects($mongoCursor);
 	}
 
@@ -78,30 +72,9 @@ class PDOMongo{
 		return self::createObjects($mongoCursor);
 	}
 
-	public function delete($field, $value, $justOne = FALSE){
-		$c = $this->collection->remove(self::createArray($field, $value), self::createArray('justOne', $justOne));
+	public function delete($attr, $value, $justOne = FALSE){
+		$c = $this->collection->remove(self::createArray($attr, $value), self::createArray('justOne', $justOne));
 		return $c;
 	}
 }
- #
- # Exemplo de uso do PDOMongo passando o host e o banco de dados
- #
-/*
-$host = 'localhost';
-$database = 'test';
-$t = new PDOMongo($host,$database);
-$t->setCollection('things');
-var_dump($t->get('id','51b6a1a2082d86d6c66faaae'));
-*/
-
- #
- # Exemplo de uso do PDOMongo com valores padroes
- #
-/*
-$t = new PDOMongo();
-$t->setDatabase('test');
-$t->setCollection('things');
-var_dump($t->get(array('a'=>1)));
-var_dump($t->get('id','51b6a1a2082d86d6c66faaae'));
-*/
 ?>
