@@ -89,8 +89,14 @@ class PDOMongo{
 		return self::createObjects($mongoCursor);
 	}
 
-	public function delete($attr, $value, $justOne = FALSE){
-		$c = $this->collection->remove(self::createArray($attr, $value), self::createArray('justOne', $justOne));
+	// If the first argument is a array, the method will use it to remove the records from the collection
+	// otherwise, it will wait for a non null value from $value
+	public function delete($attr, $value = null, $justOne = FALSE){
+		if(is_array($attr))
+			$c = $this->collection->remove($attr, self::createArray('justOne', $justOne));
+		else
+			$c = $this->collection->remove(self::createArray($attr, $value), self::createArray('justOne', $justOne));
+		
 		if($c['n'] == 0)
 			throw new Exception('Deletion wasn\'t possible.'); 
 	}
