@@ -78,12 +78,12 @@ Manipulation Database Objects
 		$pdo->update($element, $newElement);
 		
 		
-		$returnObject = $pdo->get('name', 'PDOMongo');
+		$returnObjects = $pdo->get('name', 'PDOMongo'); //returns one if name is a _id
 		$returnObject = $pdo->get('id', 'd1827dsa9d8a67qwe8q09ueq817');
 		$returnObjects = $pdo->getAll();
 		
-		//Still working on this one.
-		$pdo->delete($f, $one = FALSE);
+		//the delete method can thrown an exception.
+		$pdo->delete('id', 'd1827dsa9d8a67qwe8q09ueq817', TRUE); //if TRUE, remove JustOne.
 	?>
 
 Thanks
