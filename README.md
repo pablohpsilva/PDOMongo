@@ -90,3 +90,5 @@ Thanks
 ========
 
 Thanks for the PHP developers who created the Mongo classes for PHP.
+
+[![endorse](https://api.coderwall.com/pablohenrique/endorsecount.png)](https://coderwall.com/pablohenrique)
