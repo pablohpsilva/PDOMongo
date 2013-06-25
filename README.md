@@ -46,7 +46,7 @@ Another example is shown below. For understand how to use another options, pleas
 		$pdomongo->setCollection('things');
 	?>
 
-Mongo getters and setters
+PDOMongo getters and setters
 ========
 
 	<?php
