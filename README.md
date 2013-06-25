@@ -102,6 +102,12 @@ Manipulation Database Objects
 		
 		//the delete method can thrown an exception.
 		$pdo->delete('id', 'd1827dsa9d8a67qwe8q09ueq817', TRUE); //if TRUE, remove JustOne.
+		
+		// Example of use of an array as an argument for remove a record
+		$pdo->delete(array(
+			'name' => 'PDOMongo', 
+			'detail' => 'Its a PDO to manipulate MongoDB for lazy people'
+			));
 	?>
 
 Thanks
