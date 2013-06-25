@@ -74,8 +74,13 @@ class PDOMongo{
 
 	public function update($oldDocument, $newDocument){ $this->collection->update($oldDocument, $newDocument); }
 
-	public function get($attr, $value){
-		$mongoCursor = $this->collection->find(self::createArray($attr, $value));
+	// If the first argument is a array, the method will use it to make a search in the collection
+	// otherwise, it will wait for a non null value from $value
+	public function get($attr, $value = null){
+		if(is_array($attr))
+			$mongoCursor = $this->collection->find($attr);
+		else
+			$mongoCursor = $this->collection->find(self::createArray($attr, $value));
 		return self::createObjects($mongoCursor);
 	}
 
