@@ -4,6 +4,11 @@ PDOMongo
 PDOMongo or PDO Mongo. PDO (PHP Data Object) for MongoDB. 
 * <strong>Help me improve this small piece of software! Every help will be great and welcome.</strong>
 
+Why use it?
+========
+
+PDOMongo is a small and straightforward piece of software. It encapsulates the Mongo connection, collection and database (CCD) and gives you a CRUD for your application. PDOMongo is also usefull because you can get any of the CCD at any time you want, to perform special actions that PDOMongo by itself doesn't supports.
+
 How it works
 ========
 
