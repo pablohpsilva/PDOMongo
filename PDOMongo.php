@@ -1,9 +1,12 @@
 <?php
-
 /*
  * Desenvolvido por: Pablo Henrique Penha Silva
  * Github: pablohenrique
  */
+
+namespace REGULARPOST\DAO\Mongo;
+
+use \MongoClient;
 
 class PDOMongo{
 	private $database;
@@ -67,7 +70,7 @@ class PDOMongo{
 	// MongoDB that the PDOMongo doesn't support.
 	public function getDatabase(){ return $this->database; }
 
-	//  Creates an index on the given field(s), or does nothing if the index already exists
+	// Creates an index on the given field(s), or does nothing if the index already exists
 	public function ensureIndex($args){ return $this->collection->ensureIndex($args); }
 
 	public function insert($document){ $this->collection->insert($document); }
@@ -76,12 +79,13 @@ class PDOMongo{
 
 	// If the first argument is a array, the method will use it to make a search in the collection
 	// otherwise, it will wait for a non null value from $value
-	public function get($attr, $value = null){
-		if(is_array($attr))
-			$mongoCursor = $this->collection->find($attr);
+	public function get($attr, $value = null, $findOne = FALSE){
+		if(!is_array($attr))
+			$attr = self::createArray($attr, $value);
+		if($findOne)
+			return $this->collection->findOne($attr);
 		else
-			$mongoCursor = $this->collection->find(self::createArray($attr, $value));
-		return self::createObjects($mongoCursor);
+			return self::createObjects($this->collection->find($attr));
 	}
 
 	public function getAll(){
@@ -101,4 +105,5 @@ class PDOMongo{
 			throw new Exception('Deletion wasn\'t possible.'); 
 	}
 }
+
 ?>
