@@ -50,7 +50,7 @@ Another example is shown below. To understand how to use other options, read the
 		$pdomongo->setCollection('things');
 	?>
 
-PDOMongo getters and setters
+Getters and Setters
 ========
 
 	<?php
@@ -66,7 +66,7 @@ PDOMongo getters and setters
 		$returnCollection = $pdo->getCollection();
 	?>
 
-Manipulation Database Objects
+Manipulating Records
 ========
 
 	<?php
